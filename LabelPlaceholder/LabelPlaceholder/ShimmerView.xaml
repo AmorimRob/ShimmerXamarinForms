@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LabelPlaceholder.ShimmerView"
+             x:Name="shimmer">
+  <ContentView.Content>
+        <Grid BindingContext="{x:Reference shimmer}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="{Binding WidthShimmer}"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="{Binding HeightShimmer}"/>
+            </Grid.RowDefinitions>
+
+            <BoxView BackgroundColor="#eeeeee"
+                  Grid.Row="0"
+                  x:Name="backgroundtile"
+                  HorizontalOptions="StartAndExpand"
+                  VerticalOptions="StartAndExpand"
+                  HeightRequest="{Binding HeightShimmer}"
+                  WidthRequest="{Binding WidthShimmer}"/>
+
+                <Image Source="teste6"
+                       Grid.Row="0"
+                       x:Name="TranslateBox"
+                       VerticalOptions="Start"
+                       HorizontalOptions="Start"
+                       Aspect="AspectFit"/>
+          
+        </Grid>
+    </ContentView.Content>
+</ContentView>
