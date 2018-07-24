@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
+﻿using LabelPlaceholder.CustomRenderers;
+using LabelPlaceholder.Model;
+using System;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,12 +10,14 @@ namespace LabelPlaceholder
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ShimmerView : ContentView
 	{
-		public ShimmerView ()
-		{
-			InitializeComponent ();
+        public ShimmerView()
+        {
+            InitializeComponent();
+            ObterGradiente();
             animate();
         }
 
+       
         public static readonly BindableProperty WidthShimmerProperty =
             BindableProperty.Create(nameof(WidthShimmer), typeof(int), typeof(ShimmerView), 200);
 
@@ -37,32 +36,45 @@ namespace LabelPlaceholder
             set => SetValue(HeightShimmerProperty, value);
         }
 
+        public static readonly BindableProperty VelocityShimmerProperty =
+          BindableProperty.Create(nameof(VelocityShimmer), typeof(uint), typeof(ShimmerView), Convert.ToUInt32(400));
+
+        public uint VelocityShimmer
+        {
+            get => (uint)GetValue(VelocityShimmerProperty);
+            set => SetValue(VelocityShimmerProperty, value);
+        }
+
         private void animate()
         {
-
             Device.BeginInvokeOnMainThread(async () =>
             {
                 while (true)
                 {
                     TranslateBox.IsVisible = false;
 
-                    await TranslateBox.TranslateTo(-30, 0, 1);
+                    await TranslateBox.TranslateTo(-50, 0, 1);
 
                     TranslateBox.IsVisible = true;
 
-                    await TranslateBox.TranslateTo((WidthShimmer - 75), 0, 400);
+                    await TranslateBox.TranslateTo(WidthShimmer - 60, 0, VelocityShimmer);
 
                     TranslateBox.IsVisible = false;
 
-                    await TranslateBox.TranslateTo(-30, 0, 1);
+                    await TranslateBox.TranslateTo(-50, 0, 1);
 
                     await Task.Delay(800);
 
                     TranslateBox.IsVisible = true;
-
                 }
             });
-
         }
+
+        private void ObterGradiente()
+        {
+            Color[] gradientColors = new Color[] { Color.FromHex("#eeeeee"), Color.FromHex("#dddddd"), Color.FromHex("#eeeeee") };
+            TranslateBox.GradientColors = gradientColors;
+        }
+
     }
 }

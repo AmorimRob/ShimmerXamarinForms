@@ -5,13 +5,19 @@
              x:Class="LabelPlaceholder.MainPage"
              xmlns:views="clr-namespace:LabelPlaceholder;assembly=LabelPlaceholder">
     <StackLayout>
+        <views:ShimmerView WidthShimmer="70"
+                           HeightShimmer="30"
+                           VelocityShimmer="200"/>
+        
         <views:ShimmerView WidthShimmer="200"
-                           HeightShimmer="30"/>
+                           HeightShimmer="30"
+                           VelocityShimmer="400"/>
 
-        <views:ShimmerView WidthShimmer="200"
-                           HeightShimmer="30"/>
+        <views:ShimmerView WidthShimmer="100"
+                           HeightShimmer="100"
+                           VelocityShimmer="250"/>
 
-        <views:ShimmerView WidthShimmer="200"
-                           HeightShimmer="30"/>
+        <!--<views:ShimmerView WidthShimmer="150"
+                           HeightShimmer="30"/>-->
     </StackLayout>
 </ContentPage>
