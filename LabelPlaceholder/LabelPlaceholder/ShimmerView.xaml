@@ -30,8 +30,6 @@
                                           x:Name="TranslateBox"/>
 
             </Grid>
-            
         </StackLayout>
-
     </ContentView.Content>
 </ContentView>

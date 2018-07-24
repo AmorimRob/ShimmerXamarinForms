@@ -1,6 +1,4 @@
-﻿using LabelPlaceholder.CustomRenderers;
-using LabelPlaceholder.Model;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,10 +12,9 @@ namespace LabelPlaceholder
         {
             InitializeComponent();
             ObterGradiente();
-            animate();
+            IniciarAnimacao();
         }
 
-       
         public static readonly BindableProperty WidthShimmerProperty =
             BindableProperty.Create(nameof(WidthShimmer), typeof(int), typeof(ShimmerView), 200);
 
@@ -45,29 +42,32 @@ namespace LabelPlaceholder
             set => SetValue(VelocityShimmerProperty, value);
         }
 
-        private void animate()
+        private void IniciarAnimacao()
         {
             Device.BeginInvokeOnMainThread(async () =>
             {
                 while (true)
                 {
-                    TranslateBox.IsVisible = false;
-
-                    await TranslateBox.TranslateTo(-50, 0, 1);
+                    await RetonarGradientParaOInicio();
 
                     TranslateBox.IsVisible = true;
 
                     await TranslateBox.TranslateTo(WidthShimmer - 60, 0, VelocityShimmer);
 
-                    TranslateBox.IsVisible = false;
-
-                    await TranslateBox.TranslateTo(-50, 0, 1);
+                    await RetonarGradientParaOInicio();
 
                     await Task.Delay(800);
 
                     TranslateBox.IsVisible = true;
                 }
             });
+        }
+
+        private async Task RetonarGradientParaOInicio()
+        {
+            TranslateBox.IsVisible = false;
+
+            await TranslateBox.TranslateTo(-50, 0, 1);
         }
 
         private void ObterGradiente()
