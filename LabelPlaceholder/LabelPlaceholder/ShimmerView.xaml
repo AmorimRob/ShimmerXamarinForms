@@ -2,8 +2,8 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LabelPlaceholder.ShimmerView"
-             x:Name="shimmer"
-             xmlns:local="clr-namespace:LabelPlaceholder.CustomRenderers">
+             xmlns:local="clr-namespace:LabelPlaceholder.CustomRenderers"
+             x:Name="shimmer">
   <ContentView.Content>
         <StackLayout>
             <Grid BindingContext="{x:Reference shimmer}">
@@ -15,12 +15,12 @@
                 </Grid.RowDefinitions>
 
                 <BoxView BackgroundColor="#eeeeee"
-                  Grid.Row="0"
-                  x:Name="backgroundtile"
-                  HorizontalOptions="StartAndExpand"
-                  VerticalOptions="StartAndExpand"
-                  HeightRequest="{Binding HeightShimmer}"
-                  WidthRequest="{Binding WidthShimmer}"/>
+                          Grid.Row="0"
+                          x:Name="backgroundtile"
+                          HorizontalOptions="StartAndExpand"
+                          VerticalOptions="StartAndExpand"
+                          HeightRequest="{Binding HeightShimmer}"
+                          WidthRequest="{Binding WidthShimmer}"/>
 
                 <local:GradientViewRender HorizontalOptions="Start"
                                           VerticalOptions="Start"
