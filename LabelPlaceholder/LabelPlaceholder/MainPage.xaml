@@ -12,7 +12,11 @@
         <views:ShimmerView WidthShimmer="200"
                            HeightShimmer="30"
                            VelocityShimmer="400"/>
-
+        
+        <views:ShimmerView WidthShimmer="200"
+                           HeightShimmer="30"
+                           VelocityShimmer="400"/>
+        
         <views:ShimmerView WidthShimmer="100"
                            HeightShimmer="100"
                            VelocityShimmer="250"/>

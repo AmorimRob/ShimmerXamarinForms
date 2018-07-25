@@ -56,7 +56,7 @@ namespace LabelPlaceholder
 
                     await RetonarGradientParaOInicio();
 
-                    await Task.Delay(800);
+                    await Task.Delay(1000);
 
                     TranslateBox.IsVisible = true;
                 }
@@ -75,6 +75,5 @@ namespace LabelPlaceholder
             Color[] gradientColors = new Color[] { Color.FromHex("#eeeeee"), Color.FromHex("#dddddd"), Color.FromHex("#eeeeee") };
             TranslateBox.GradientColors = gradientColors;
         }
-
     }
 }

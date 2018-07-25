@@ -7,7 +7,7 @@ namespace LabelPlaceholder.CustomRenderers
 {
     public class GradientViewRender : View
     {
-        public static readonly BindableProperty GradientColorsProperty = BindableProperty.Create<GradientViewRender, Color[]>(p => p.GradientColors, new Color[] { Color.White });
+        public static readonly BindableProperty GradientColorsProperty = BindableProperty.Create<GradientViewRender, Color[]>(p => p.GradientColors, new Color[] { Color.White, Color.Black});
 
         public Color[] GradientColors
         {
