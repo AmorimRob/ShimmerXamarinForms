@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LabelPlaceholder.CustomRenderers;
+using LabelPlaceholder.Model;
+using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,7 +13,7 @@ namespace LabelPlaceholder
         public ShimmerView()
         {
             InitializeComponent();
-            ObterGradiente();
+            ObterGradient();
             IniciarAnimacao();
         }
 
@@ -52,7 +54,9 @@ namespace LabelPlaceholder
 
                     TranslateBox.IsVisible = true;
 
-                    await TranslateBox.TranslateTo(WidthShimmer - 60, 0, VelocityShimmer);
+                    int recuo = ObterRecuo();
+
+                    await TranslateBox.TranslateTo(WidthShimmer - recuo, 0, VelocityShimmer);
 
                     await RetonarGradientParaOInicio();
 
@@ -63,6 +67,14 @@ namespace LabelPlaceholder
             });
         }
 
+        private static int ObterRecuo()
+        {
+            if (Device.RuntimePlatform == Device.iOS)
+                return 55;
+            else
+                return 60;
+        }
+
         private async Task RetonarGradientParaOInicio()
         {
             TranslateBox.IsVisible = false;
@@ -70,10 +82,39 @@ namespace LabelPlaceholder
             await TranslateBox.TranslateTo(-50, 0, 1);
         }
 
-        private void ObterGradiente()
+        private void ObterGradient()
         {
             Color[] gradientColors = new Color[] { Color.FromHex("#eeeeee"), Color.FromHex("#dddddd"), Color.FromHex("#eeeeee") };
-            TranslateBox.GradientColors = gradientColors;
+
+            if (Device.RuntimePlatform == Device.Android)
+                ObterGradienteAndroid(gradientColors);
+            else if (Device.RuntimePlatform == Device.iOS)
+                ObterGradienteiOS(gradientColors);
         }
+
+        private void ObterGradienteAndroid(Color[] gradientColors) => TranslateBox.GradientColors = gradientColors;
+
+        private void ObterGradienteiOS(Color[] gradientColors)
+        {
+            GradientModel g = new GradientModel()
+            {
+                GradientColors = gradientColors,
+                ViewWidth = WidthShimmer,
+                ViewHeight = HeightShimmer,
+                RoundCorners = false,
+                CornerRadius = 0,
+                LeftToRight = true
+            };
+
+            TranslateBox.SetBinding(GradientViewRender.GradientColorsProperty, "GradientColors");
+            TranslateBox.SetBinding(GradientViewRender.CornerRadiusProperty, "CornerRadius");
+            TranslateBox.SetBinding(GradientViewRender.ViewWidthProperty, "ViewWidth");
+            TranslateBox.SetBinding(GradientViewRender.ViewHeightProperty, "ViewHeight");
+            TranslateBox.SetBinding(GradientViewRender.RoundCornersProperty, "RoundCorners");
+            TranslateBox.SetBinding(GradientViewRender.LeftToRightProperty, "LeftToRight");
+
+            TranslateBox.BindingContext = g;
+        }
+
     }
 }
