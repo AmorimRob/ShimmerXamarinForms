@@ -46,14 +46,12 @@ namespace LabelPlaceholder
 
         private void IniciarAnimacao()
         {
-            Device.BeginInvokeOnMainThread(async () =>
+			Device.BeginInvokeOnMainThread(async () =>
             {
+                await RetonarGradientParaOInicio();
+
                 while (true)
                 {
-                    await RetonarGradientParaOInicio();
-
-                    TranslateBox.IsVisible = true;
-
                     int recuo = ObterRecuo();
 
                     await TranslateBox.TranslateTo(WidthShimmer - recuo, 0, VelocityShimmer);
@@ -61,25 +59,20 @@ namespace LabelPlaceholder
                     await RetonarGradientParaOInicio();
 
                     await Task.Delay(1000);
-
-                    TranslateBox.IsVisible = true;
                 }
             });
         }
 
-        private static int ObterRecuo()
-        {
-            if (Device.RuntimePlatform == Device.iOS)
-                return 55;
-            else
-                return 60;
-        }
+		private int ObterRecuo()
+            => Device.RuntimePlatform == Device.iOS ? 55 : 60;
 
         private async Task RetonarGradientParaOInicio()
         {
             TranslateBox.IsVisible = false;
 
             await TranslateBox.TranslateTo(-50, 0, 1);
+
+			TranslateBox.IsVisible = true;
         }
 
         private void ObterGradient()
@@ -96,16 +89,6 @@ namespace LabelPlaceholder
 
         private void ObterGradienteiOS(Color[] gradientColors)
         {
-            GradientModel g = new GradientModel()
-            {
-                GradientColors = gradientColors,
-                ViewWidth = WidthShimmer,
-                ViewHeight = HeightShimmer,
-                RoundCorners = false,
-                CornerRadius = 0,
-                LeftToRight = true
-            };
-
             TranslateBox.SetBinding(GradientViewRender.GradientColorsProperty, "GradientColors");
             TranslateBox.SetBinding(GradientViewRender.CornerRadiusProperty, "CornerRadius");
             TranslateBox.SetBinding(GradientViewRender.ViewWidthProperty, "ViewWidth");
@@ -113,7 +96,7 @@ namespace LabelPlaceholder
             TranslateBox.SetBinding(GradientViewRender.RoundCornersProperty, "RoundCorners");
             TranslateBox.SetBinding(GradientViewRender.LeftToRightProperty, "LeftToRight");
 
-            TranslateBox.BindingContext = g;
+            TranslateBox.BindingContext = GradientModel.Create(gradientColors, WidthShimmer, HeightShimmer, false, 0, true);
         }
 
     }
